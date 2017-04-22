@@ -55,6 +55,11 @@ IF Client is logged in, server responds with
 
     STATUS 200
 
+**--> Server sends to {player}**
+
+    STATUS 210\n
+    {client name}
+
 IF Client not logged in, server responds with
 
     STATUS 401
