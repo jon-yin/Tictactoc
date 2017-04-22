@@ -1,1 +1,1 @@
-# cse310-Project
+Protocol is defined in PROTOCOL.md
