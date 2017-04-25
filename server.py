@@ -23,14 +23,14 @@ while running:
             # remote socket trying to connect
             client, address = server.accept()
             input.append(client)  # add it to the socket list so we can check it now
-            print 'new client added%s' % str(address)
+            print('new client added%s' % str(address))
 
         else:
             # select has indicated that these sockets have data available to recv
             data = s.recv(maxsize)
 
             if data:
-                print '%s received from %s' % (data, s.getsockname())
+                print('%s received from %s' % (data, s.getsockname()))
 
                 # Uncomment below to echo the recv'd data back
                 # to the sender... loopback!
