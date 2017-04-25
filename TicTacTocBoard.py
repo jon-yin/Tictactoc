@@ -2,8 +2,17 @@
 #elements to the board and check if the game is still ongoing
 class TicTacTocBoard:
     #Initializes the board.
-    def __init__(self):
+    def __init__(self, player1, player2):
         self.board = [[None, None, None],[None,None,None],[None,None,None]];
+		self.player1 = player1
+		self.player2 = player2
+	
+	def getPlayers(self)
+		return player1, player2
+		
+	def canPlay(self, player):
+		return player == self.player1 || player == self.player2
+		
     # This method will attempt to make a move and set a symbol onto the board.
     # Returns true if board move is successful(setting a move onto an empty square)
     # Returns false if board move is unsuccessful (already a space on it or an invalid range).   
