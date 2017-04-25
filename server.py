@@ -2,6 +2,9 @@ import select
 import socket
 import sys
 
+from GameServer import GameServer
+from Protocol import Protocol
+
 host = 'localhost'
 port = 50000
 backlog = 5
@@ -13,6 +16,18 @@ server.listen(backlog)
 input = [server, ]  # a list of all connections we want to check for data
 
 running = 1
+
+gameServer = GameServer()
+
+
+def sendStatus(soc, code, message=None):
+    codeStr = "STATUS " + str(code)
+
+    if message is not None:
+        codeStr += "\n" + message
+
+    soc.send(codeStr)
+
 
 while running:
     inputready, outputready, exceptready = select.select(input, [], [])
@@ -30,11 +45,19 @@ while running:
             data = s.recv(maxsize)
 
             if data:
-                print('%s received from %s' % (data, s.getsockname()))
+                protocol = Protocol(data)
+                error, error_status = protocol.getError()
 
-                # Uncomment below to echo the recv'd data back
-                # to the sender... loopback!
-                # s.send(data)
+                if error:
+                    sendStatus(s, error_status)
+                else:
+                    verb, arguments = protocol.getInfo()
+                    print(verb)
+                    print(arguments)
+
+                    # Uncomment below to echo the recv'd data back
+                    # to the sender... loopback!
+                    # s.send(data)
             else:  # if recv() returned NULL, that usually means the sender wants
                 # to close the socket.
                 s.close()
