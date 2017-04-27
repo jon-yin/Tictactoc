@@ -25,7 +25,7 @@ Client sends
 
 IF Client is logged in, server responds with a comma separated list
 
-    STATUS 200\n
+    STATUS 250\n
     {gameId}:{player1}:{player2},{gameId}:{player1}:{player2},...
 
 IF Client not logged in, server responds with
@@ -39,8 +39,8 @@ Client sends
 
 IF Client is logged in, server responds with a comma separated list
 
-    STATUS 200\n
-    {player1},{player2},{player3},...
+    STATUS 251\n
+    {player1}:{status},{player2}:{status},{player3}:{status},...
 
 IF Client not logged in, server responds with
 
@@ -74,11 +74,11 @@ If player not found, server responds with
 
 If player is busy, server responds with
 
-    STATUS 422
+    STATUS 423
 
 IF player is the same person as the client, server responds with
 
-    STATUS 400
+    STATUS 409
 
 Client sends
 ------------
@@ -95,15 +95,15 @@ IF Client has not started a game, server responds with
 
 IF it is not the Client's turn, server responds with
 
-    STATUS 403
+    STATUS 406
 
 IF the move is not properly formatted {1-9}, server responds with
 
-    STATUS 422
+    STATUS 424
 
 IF the move is not legal, server responds with
 
-    STATUS 409
+    STATUS 411
 
 IF the move is legal and it is the client's turn, server responds with
 

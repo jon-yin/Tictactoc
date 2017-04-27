@@ -1,5 +1,4 @@
-from GameServer import GameServer
-from Protocol import Protocol
+from ServerProtocol import Protocol
 
 message = "WHO"
 
