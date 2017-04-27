@@ -28,6 +28,22 @@ def sendStatus(soc, code, message=None):
 
     soc.send(codeStr)
 
+#Defining Part 1 command line arguments.
+#Help Command, send to connection socket all supported commands.
+def resHelp(socket):
+    retString = ""
+    retString += "LIST OF AVAILABLE COMMANDS\n"
+    retString += "help: Prints all available commands. SYNTAX: $help \n"
+    retString += "login: Login to the server, allowing you to both play and communicate with other players. SYNTAX: $login SAMPLE_NAME \n"
+    retString += "place: Make a move and place a symbol onto the board, accepts a value from 1-9. SYNTAX: $place 4\n"
+    retString += "exit: Quit from the current game if any and exit from the server SYNTAX: $exit \n")
+    socket.send(retString)
+    
+#Exit Command, close connection socket.
+def exitCommand(socket):
+    socket.send("Exiting from server\n")
+    socket.close()
+
 
 while running:
     inputready, outputready, exceptready = select.select(input, [], [])

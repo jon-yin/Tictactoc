@@ -7,9 +7,10 @@ class Status(Enum):
 
 
 class Player:
-    def __init__(self, username):
+    def __init__(self, username, socket):
         self.username = username
         self.status = Status.AVAILABLE
+        self.socket = socket
         self.game = None
 
     # Start a new game for the player
@@ -27,3 +28,6 @@ class Player:
     # Can the player start a new game
     def canStartNewGame(self):
         return self.status == Status.AVAILABLE
+
+    def sendData(self, data):
+        socket.send(data)
