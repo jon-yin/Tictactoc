@@ -43,10 +43,26 @@ def printFromServer(s):
                     print "Request successful"
                 elif verb == "GAMELIST":
                     games = arguments[0]
-                    print games
+
+                    print "List of Games"
+                    print "---------------"
+
+                    for gm in games:
+                        print str(str(gm[0]) + ": " + gm[1] + " VS. " + gm[2])
+
                 elif verb == "PLAYERLIST":
                     players = arguments[0]
-                    print players
+
+                    print "List of Players"
+                    print "---------------"
+
+                    for pl in players:
+                        if pl[1] == 1:
+                            status = "Available"
+                        else:
+                            status = "Busy"
+
+                        print pl[0] + ": " + status
                 elif verb == "NEWGAME":
                     fromPlayer = arguments[0]
 
@@ -92,9 +108,10 @@ def printFromServer(s):
                     winner = arguments[0]
 
                     print winner + " WON THE GAME!!!"
+                elif verb == "GAMEDRAW":
+                    print "GAME IS A DRAW!!!"
                 elif verb == "PLAYEREXIT":
-                    fromPlayer = arguments[0]
-
+                    print "OTHER PLAYER HAS LEFT THE GAME!!!"
                 elif verb == "NOTTURN":
                     print "IT IS NOT YOUR TURN!!!"
                 elif verb == "ILLEGALMOVE":
@@ -103,6 +120,9 @@ def printFromServer(s):
                     print "YOU CAN'T PLAY YOURSELF"
                 elif verb == "PLAYERNOTFOUND":
                     print "PLAYER NOT FOUND"
+                elif verb == "SAFEEXIT":
+                    print "SAFE TO LEAVE, EXITING"
+                    os._exit(1)
 
     return singMessage
 
@@ -141,4 +161,6 @@ else:
         request = raw_input('Input Request:\n')
         clientSocket.send(request.encode())
 
-# clientSocket.close()
+        if request == 'EXIT':
+            clientSocket.close()
+            os._exit(1)

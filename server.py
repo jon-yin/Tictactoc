@@ -159,22 +159,56 @@ while running:
 
                                                 if game.isOver()[0]:
                                                     ret, loser = game.isOver()
-                                                    winningPlayer = players[0]
 
-                                                    if ret == players[1].getSymbol():
-                                                        winningPlayer = players[1]
-
-                                                    sendStatus(players[0].getSocket(), 202, winningPlayer.getUsername())
-                                                    sendStatus(players[1].getSocket(), 202, winningPlayer.getUsername())
+                                                    if loser == players[1].getSymbol():
+                                                        sendStatus(players[0].getSocket(), 202,
+                                                                   players[1].getUsername())
+                                                        sendStatus(players[1].getSocket(), 202,
+                                                                   players[1].getUsername())
+                                                    elif loser == players[0].getSymbol():
+                                                        sendStatus(players[0].getSocket(), 202,
+                                                                   players[0].getUsername())
+                                                        sendStatus(players[1].getSocket(), 202,
+                                                                   players[0].getUsername())
+                                                    else:
+                                                        sendStatus(players[0].getSocket(), 203)
+                                                        sendStatus(players[1].getSocket(), 203)
 
                                                     gameServer.endGame(game)
                                             else:
                                                 sendStatus(s, 411)
                                         else:
                                             sendStatus(s, 406)
+                            elif verb == "EXIT":
+                                if not loggedIn(s):
+                                    sendStatus(s, 401)
+                                else:
+                                    game = currPlayer(s).getGame()
+
+                                    if game is not None:
+                                        gameServer.endGame(game)
+
+                                        for p in game.getPlayers():
+                                            if p != currPlayer(s):
+                                                sendStatus(p.getSocket(), 205)
+
+                                    sendStatus(currPlayer(s).getSocket(), 206)
+                                    gameServer.logout(currPlayer(s))
+                                    socketsToPlayers.pop(s, None)
+                                    s.close()
+                                    input.remove(s)
 
             else:  # sender wants to close the socket.
                 if loggedIn(s):
+                    game = currPlayer(s).getGame()
+
+                    if game is not None:
+                        gameServer.endGame(game)
+
+                        for p in game.getPlayers():
+                            if p != currPlayer(s):
+                                sendStatus(p.getSocket(), 205)
+
                     gameServer.logout(currPlayer(s))
                     socketsToPlayers.pop(s, None)
 

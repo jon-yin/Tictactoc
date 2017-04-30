@@ -119,6 +119,9 @@ IF the move is legal and it is the client's turn, server responds with
     STATUS 202\n
     {winning player}
 
+**--> IF the move triggered a draw, server responds again with**
+
+    STATUS 203
 
 Client sends
 ------------
@@ -137,3 +140,6 @@ IF Client is logged in, server responds with
 
     STATUS 205
 
+**--> Server sends to client it is safe to exit**
+
+    STATUS 206

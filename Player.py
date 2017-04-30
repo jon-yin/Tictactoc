@@ -1,15 +1,7 @@
-from enum import Enum
-
-
-class Status(Enum):
-    AVAILABLE = 1
-    BUSY = 2
-
-
 class Player:
     def __init__(self, username, socket):
         self.username = username
-        self.status = Status.AVAILABLE
+        self.status = 1
         self.socket = socket
         self.game = None
         self.symbol = None
@@ -20,13 +12,13 @@ class Player:
             return
 
         self.game = game
-        self.status = Status.BUSY
+        self.status = 2
         self.symbol = symbol
 
     def endGame(self):
         self.game = None
         self.symbol = None
-        self.status = Status.AVAILABLE
+        self.status = 1
 
     def getUsername(self):
         return self.username
@@ -43,7 +35,7 @@ class Player:
 
     # Can the player start a new game
     def canStartNewGame(self):
-        return self.status == Status.AVAILABLE
+        return self.status == 1
 
     def sendData(self, data):
         self.socket.send(data)

@@ -32,8 +32,12 @@ class Protocol:
 
                 if int(tokens[1]) == 200:
                     pr.setVerb("SUCCESS")
+                elif int(tokens[1]) == 203:
+                    pr.setVerb("GAMEDRAW")
                 elif int(tokens[1]) == 205:
                     pr.setVerb("PLAYEREXIT")
+                elif int(tokens[1]) == 206:
+                    pr.setVerb("SAFEEXIT")
                 elif int(tokens[1]) == 422:
                     pr.setVerb("USERNAMETAKEN")
                 elif int(tokens[1]) == 406:
@@ -69,6 +73,8 @@ class Protocol:
                         if len(pieces) != 3:
                             continue
 
+                        pieces[0] = int(pieces[0])
+
                         li.append(pieces)
 
                     pr.setVerb("GAMELIST")
@@ -82,6 +88,8 @@ class Protocol:
 
                         if len(pieces) != 2:
                             continue
+
+                        pieces[1] = int(pieces[1])
 
                         li.append(pieces)
 
