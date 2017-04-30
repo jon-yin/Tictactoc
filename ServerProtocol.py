@@ -88,6 +88,14 @@ class Protocol:
                     continue
 
                 pr.setVerb(verb)
+            elif verb == "HELP":
+                if token_len != 1:
+                    pr.setError(True)
+                    pr.setErrorStatus(500)
+                    self.messages.append(pr)
+                    continue
+
+                pr.setVerb(verb)
             else:
                 pr.setError(True)
                 pr.setErrorStatus(500)

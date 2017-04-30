@@ -33,15 +33,16 @@ def sendStatus(soc, code, message=None):
 
 # Defining Part 1 command line arguments.
 # Help Command, send to connection socket all supported commands.
-def resHelp(socket):
-    retString = ""
-    retString += "LIST OF AVAILABLE COMMANDS\n"
-    retString += "help: Prints all available commands. SYNTAX: $help \n"
-    retString += "login: Login to the server, allowing you to both play and communicate with other players. SYNTAX: $login SAMPLE_NAME \n"
-    retString += "place: Make a move and place a symbol onto the board, accepts a value from 1-9. SYNTAX: $place 4\n"
-    retString += "exit: Quit from the current game if any and exit from the server SYNTAX: $exit \n"
-    socket.send(retString)
-
+def resHelp():
+    return "LIST OF AVAILABLE COMMANDS{n}" \
+           "----------------------------------{n}" \
+           "help:  Prints all available commands. SYNTAX: $HELP{n}" \
+           "login: Login to the server, allowing you to both play and communicate with other players. SYNTAX: $LOGIN username{n}" \
+           "who:   Get a list of all online players. SYNTAX: $WHO{n}" \
+           "games: Get a list of all currently played games. SYNTAX: $GAMES{n}" \
+           "play:  Start a new game with a player. SYNTAX: $PLAY username{n}" \
+           "place: Make a move and place a symbol onto the board, accepts a value from 1-9. SYNTAX: $PLACE 4{n}" \
+           "exit:  Quit from the current game if any and exit from the server SYNTAX: $EXIT{n}{n}"
 
 # Exit Command, close connection socket.
 def exitCommand(socket):
@@ -197,6 +198,8 @@ while running:
                                     socketsToPlayers.pop(s, None)
                                     s.close()
                                     input.remove(s)
+                            elif verb == "HELP":
+                                sendStatus(s, 212, resHelp())
 
             else:  # sender wants to close the socket.
                 if loggedIn(s):

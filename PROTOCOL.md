@@ -143,3 +143,13 @@ IF Client is logged in, server responds with
 **--> Server sends to client it is safe to exit**
 
     STATUS 206
+
+Client sends
+------------
+
+    HELP
+
+Server responds with
+
+    STATUS 212\n
+    {{help string}}

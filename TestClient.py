@@ -123,6 +123,8 @@ def printFromServer(s):
                 elif verb == "SAFEEXIT":
                     print "SAFE TO LEAVE, EXITING"
                     os._exit(1)
+                elif verb == "HELPSTR":
+                    print arguments[0]
 
     return singMessage
 

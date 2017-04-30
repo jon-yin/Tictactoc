@@ -113,6 +113,9 @@ class Protocol:
                 elif int(tokens[1]) == 202:
                     pr.setVerb("WONGAME")
                     pr.appendArgument(parts[1])
+                elif int(tokens[1]) == 212:
+                    pr.setVerb("HELPSTR")
+                    pr.appendArgument(parts[1].replace("{n}", "\n"))
                 else:
                     pr.setError(True)
                     pr.setErrorStatus(500)
