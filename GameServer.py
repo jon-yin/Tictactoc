@@ -1,6 +1,9 @@
 from Player import Player
 from TicTacTocBoard import TicTacTocBoard
 
+# A helper class to store information about players, games
+# Can start new games, end existing games, get information about players
+
 
 class GameServer:
     def __init__(self):
@@ -17,10 +20,8 @@ class GameServer:
             self.players[username] = player
             return True, player
 
+    # Remove player from our internal list
     def logout(self, player):
-
-        # TODO End ongoing game
-
         self.players.pop(player.getUsername(), None)
 
     # Get a particular player from a username
@@ -45,11 +46,14 @@ class GameServer:
 
         return True
 
+    # End a game instance
     def endGame(self, game):
         self.games.pop(game.getId(), None)
         players = game.getPlayers()
         players[0].endGame()
         players[1].endGame()
+        for i in game.getObservers():
+            i.endGame()
 
     # Get an array of ongoing games
     def getGames(self):
@@ -60,6 +64,10 @@ class GameServer:
             rGames.append([id, players[0].getUsername(), players[1].getUsername()])
 
         return rGames
+
+    # Get a game with a specific gid.
+    def getGame(self, id):
+        return self.games[id]
 
     # Get an array of logged in players
     def getPlayers(self):

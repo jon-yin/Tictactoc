@@ -6,8 +6,26 @@ class TicTacTocBoard:
         self.board = [[None, None, None],[None,None,None],[None,None,None]]
         self.player1 = player1
         self.player2 = player2
+        self.observers = []
         self.id = id
         self.notPlayersTurn = "X"
+
+    def setBoard(self, code):
+        index = 0
+        for i in code:
+            if (i == "0"):
+                self.board[index // 3][index % 3] = None
+            elif (i == "1"):
+                self.board[index // 3][index % 3] = "X"
+            else:
+                self.board[index // 3][index % 3] = "O"
+            index += 1
+
+    def getBoard(self):
+        return self.board
+
+    def getObservers(self):
+        return self.observers
 
     def getPlayers(self):
         return self.player1, self.player2
@@ -21,9 +39,18 @@ class TicTacTocBoard:
     def isTurn(self, player):
         return player != self.notPlayersTurn
 
+    # Adds an observer to the current game
+    def addObserver(self, observer):
+        self.observers.append(observer)
+
+    #Remove an observer from the game.
+
+    def removeObserver(self, observer):
+        self.observers.remove(observer)
+
     # This method will attempt to make a move and set a symbol onto the board.
     # Returns true if board move is successful(setting a move onto an empty square)
-    # Returns false if board move is unsuccessful (already a space on it or an invalid range).   
+    # Returns false if board move is unsuccessful (already a space on it or an invalid range).
     def makeMove(self, position, symbol):
         position -= 1
         #return false if position is outside of range.
@@ -60,14 +87,14 @@ class TicTacTocBoard:
 
     #This method will check to see if there still exists a vacant cell.
     #Returns true if an empty cell exists.
-    #Returns false if no empty cell exists. 
+    #Returns false if no empty cell exists.
     def checkEmpty(self):
         for i in range(3):
             for j in range(3):
                 if self.board[i][j] == None:
                     return True
         return False
-    
+
     #A string representation of the board.
     def __str__(self):
         retString = ""

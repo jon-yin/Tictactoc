@@ -153,3 +153,66 @@ Server responds with
 
     STATUS 212\n
     {{help string}}
+    
+Client sends
+------------
+
+    OBSERVE {game id}
+
+IF Client not logged in, server responds with
+
+    STATUS 401
+    
+IF Client is playing a game, server responds with
+
+    STATUS 408
+    
+IF Game does not exist, server responds with
+
+    STATUS 406
+    
+Server sends if successful 
+
+    STATUS 220\n
+    {message}
+    
+Client sends
+------------
+
+    UNOBSERVE {game id}
+
+IF Client not logged in, server responds with
+
+    STATUS 401
+    
+IF Client is not observing a game, server responds with
+
+    STATUS 421
+    
+IF Game does not exist, server responds with
+
+    STATUS 430
+    
+Server sends if successful 
+
+    STATUS 208
+    
+Client sends
+------------
+
+    COMMENT {comment}
+
+IF Client not logged in, server responds with
+
+    STATUS 401
+    
+IF Client is not observing a game, server responds with
+
+    STATUS 425
+    
+**--> Server sends to clients observing and playing the game**
+
+    STATUS 230\n
+    {message}
+    
+       

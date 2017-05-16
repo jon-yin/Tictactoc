@@ -1,3 +1,6 @@
+# Helper class to store information about a protocol message
+
+
 class ProtocolMessage:
     def __init__(self):
         self.error = False
